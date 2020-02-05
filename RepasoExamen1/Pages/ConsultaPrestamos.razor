@@ -1,0 +1,77 @@
+﻿@page "/ConsultaPrestamos"
+@using RepasoExamen1.BLL;
+@using RepasoExamen1.Entidades;
+
+
+
+
+
+
+
+    <div class="container">
+        <h3 class="display-4 text-center">Consulta de Prestamos</h3>
+
+        <div>
+
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Monto</th>
+                        <th scope="col">Semanas</th>
+                        <th scope="col">Concepto</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var obj in ListaPrestamos)
+                    {
+                    <tr>
+                        <th scope="row">@obj.PrestamoId</th>
+                        <td>@obj.Fecha</td>
+                        <td>@obj.Monto</td>
+                        <td>@obj.Semanas</td>
+                        <td>@obj.Concepto</td>
+                    </tr>
+                    }
+
+
+                </tbody>
+            </table>
+
+            
+
+        </div>
+
+
+    </div>
+
+@code {
+
+
+    public List<Prestamos> ListaPrestamos { get; set; }
+
+
+    protected override void OnInitialized()
+    {
+        ListaPrestamos = new List<Prestamos>();
+        CargarLista();
+
+    }
+
+    private void CargarLista()
+    {
+        RepositorioPrestamo db = new RepositorioPrestamo();
+
+        try
+        {
+
+            ListaPrestamos = db.GetList( P => true);
+
+        }
+        catch (Exception) { throw; }
+    }
+
+
+}

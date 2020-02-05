@@ -1,0 +1,83 @@
+﻿@page "/RegistroPrestamo"
+@using RepasoExamen1.Entidades;
+@using RepasoExamen1.BLL;
+
+
+
+
+
+
+    <div class="container">
+
+        <h3 class="display-4 text-center">Registro de Prestamo</h3>
+
+        <EditForm Model="@Prestamo" OnValidSubmit="Guardar">
+
+            <DataAnnotationsValidator />
+
+            <div class="form-group">
+                <label for="IdInput">Id</label>
+                <InputNumber Id="IdInput" class="form-control" @bind-Value="@Prestamo.PrestamoId"></InputNumber>
+            </div>
+
+            <div class="form-group">
+                <label for="IdInput">FechaInput</label>
+                <InputDate Id="FechaInput" class="form-control" @bind-Value="@Prestamo.Fecha"></InputDate>
+            </div>
+
+            <div class="form-group">
+                <label for="MontoInput">Monto</label>
+                <InputNumber Id="MontoInput" class="form-control" @bind-Value="@Prestamo.Monto"></InputNumber>
+            </div>
+
+            <div class="form-group">
+                <label for="SemanasInput">Semanas</label>
+                <InputNumber Id="SemanasInput" class="form-control" @bind-Value="@Prestamo.Semanas"></InputNumber>
+            </div>
+
+            <div class="form-group">
+                <label for="ConceptoInput">Concepto</label>
+                <InputTextArea Id="ConceptoInput" class="form-control" @bind-Value="@Prestamo.Concepto"></InputTextArea>
+            </div>
+
+            <ValidationSummary />
+            <small class="text-muted">@Mensaje</small>
+            <button type="submit" class="btn btn-success">Guardar</button>
+
+        </EditForm>
+    </div>
+
+
+   
+
+   
+
+
+@code {
+
+
+    public Prestamos Prestamo { get; set; }
+    public string Mensaje { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Prestamo = new Prestamos();
+    }
+
+    private void Guardar()
+    {
+        RepositorioPrestamo db = new RepositorioPrestamo();
+
+        try
+        {
+
+            db.Guardar(Prestamo);
+            Prestamo = new Prestamos();
+            Mensaje = "Guardado correctamente";
+
+
+        }
+        catch (Exception) { throw; }
+    }
+
+}
